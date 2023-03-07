@@ -1,0 +1,23 @@
+version: "3"
+services:
+  auth:
+    build: ./auth-api
+  users:
+    build: ./users-api
+    environment:
+      - AUTH_SERVICE_SERVICE_HOST: auth
+    ports: 
+      - "8080:8080"
+  tasks:
+    build: ./tasks-api
+    ports: 
+      - "8000:8000"
+    environment:
+      AUTH_ADDRESS: auth
+      TASKS_FOLDER: tasks
+  frontend:
+    build: ./frontend
+    ports:
+      - "80:80"
+    environment:
+      - TASKS_ADDRESS: ''
